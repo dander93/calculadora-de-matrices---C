@@ -1,0 +1,873 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h> 
+
+
+#define H 3
+
+//prototipos funciones internas
+void guarda1();
+void guarda2();
+void titulo();
+
+//prototipos de calculo
+void multiplicacion(float matmult[H][H],int limite);
+void restamatriz(float mat1[H][H],float mat2[H][H],int limite);
+void sumamatriz(float mat1[H][H],float mat2[H][H],int limite);
+void divmatriz(float mat1[H][H],int limite);
+void minversa(float mat[H][H] ,int limite);
+void diagonal(float mat[H][H], int limite);
+void multimatris(float mat[H][H],float mat2[H][H],int limite);
+
+int main(){
+    
+    int i,j,k,l,menu,submenu,cletra,menucolor,cambmatriz,menumult,menudiv,menuinicio,volmenuprin;
+    float matriz1[H][H],matriz2[H][H];
+    int caracter;
+    
+    system("title CALCULADORA DE MATRICES");
+    
+    titulo();
+         printf("\n\n\n"); 
+    printf("Desea ingresar ahora los valores para las matrices\n");
+    printf("\tNota: Si no ingresa los valores para las matrices ahora lo tendra que hacer desde Opciones > Cambiar el contenido de alguna de las matrices\n");
+    printf("1. \tSi\n");
+    printf("2. \tNo\n");
+    
+
+    for(k=0;k<1;k++){
+    printf("Valor: ");
+    caracter=scanf("%d",&menuinicio);//cuando el scanf no es verdadero ( no resive un tipo de valor que espera devuelve un 0 , el 0 se guarda en caracter
+                                     // entonces entra el el while que se ejecuta mientras el "caracter sea 0"
+    while(!caracter){
+                     printf("\nLas LETRAS no valen.Introduce un numero: ");
+                     fflush(stdin);//esto borra el buffer
+                     caracter=scanf("%d",&menuinicio);
+                     }
+    
+    switch(menuinicio){
+             case 2:{
+                  for(i=0;i<H;i++){
+                    for(j=0;j<H;j++){
+                                     matriz1[i][j]=0;
+                                     matriz2[i][j]=0;
+                                     }
+                                   }
+                     break;
+                     }
+             case 1:{
+                                
+      printf("\t\t\tINGRESO DE LOS VALORES DE LA PRIMERA MATRIZ\n");
+      guarda1();
+    for(i=0;i<H;i++){
+      for(j=0;j<H;j++){
+                       printf("Ingrese un valor para el contenido de la posicion [%d][%d]\n",i+1,j+1);
+                       printf("\tvalor: ");
+                     caracter=scanf("%f",&matriz1[i][j]);
+                     while(!caracter){
+                     printf("\nLas LETRAS no valen.Introduce un numero: ");
+                     fflush(stdin);//esto borra el buffer
+                     caracter=scanf("%f",&matriz1[i][j]);
+                                     }
+                       }
+                     }                     
+          printf("\t\t\tINGRESO DE LOS VALORES DE LA SEGUNDA MATRIZ\n");
+      guarda1();
+    for(i=0;i<H;i++){
+      for(j=0;j<H;j++){
+                       printf("Ingrese un valor para el contenido de la posicion [%d][%d]\n",i+1,j+1);
+                       printf("\tvalor: ");
+                       caracter=scanf("%f",&matriz2[i][j]);
+                     while(!caracter){
+                     printf("\nLas LETRAS no valen.Introduce un numero: ");
+                     fflush(stdin);//esto borra el buffer
+                     caracter=scanf("%f",&matriz2[i][j]);
+                                     }
+                       }
+                     }
+                     break;
+                     }
+             default:{
+                      printf("Error, el valor no corresponde");
+                      k--;
+                      break;
+                      }
+                      }
+             }
+            
+     system("cls");
+     titulo();              
+        menuprin:
+       
+               printf("\t\t\t LAS MATRICES INGRESADAS SON : \n");
+                 
+        printf("\nPRIMERA MATRIZ \n");
+    for(i=0;i<H;i++){
+        for(j=0;j<H;j++){
+                         printf("[%2.2f] ",matriz1[i][j]);
+        }
+        printf("\n");
+    }
+            printf("\nSEGUNDA MATRIZ MATRIZ \n");
+    for(i=0;i<3;i++){
+        for(j=0;j<3;j++){
+                         printf("[%2.2f] ",matriz2[i][j]);
+        }
+        printf("\n");
+    }             
+                 
+     guarda1();           
+                  
+    printf("Elija una opcion del siguiente menu de la calculadora\n\n");
+
+                     printf("1. Mutiplicacion por un numero\n");
+                     printf("2. Resta de las matrices\n");
+                     printf("3. Suma de las matrices\n");
+                     printf("4. Divicion de una matriz por un numero\n");
+                     printf("5. Matriz inversa y cofactor\n");
+                     printf("6. Suma de los valores de la diagonal\n");
+                     printf("7. Multiplicacion de las matrices entre si\n");
+                     printf("8. Opciones\n");
+                     printf("9. Salir\n\n");
+                     
+
+    for(i=0;i<1;i++){
+                     printf("\topcion: ");
+                     caracter=scanf("%d",&menu);
+                     while(!caracter){
+                     printf("\nLas LETRAS no valen.Introduce un numero: ");
+                     fflush(stdin);//esto borra el buffer
+                     caracter=scanf("%d",&menu);
+                                     }
+                     guarda2();
+                         switch(menu){
+                                      case 1:{
+                              for(k=0;k<1;k++){             
+                                           printf("Cual de las matrices desea usar :\n\n");
+                                           printf("1. \tPRIMERA MATRIZ\n\n");
+                                               for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz1[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }
+                                           printf("\n2. \tSEGUNDA MATRIZ\n\n");
+                                            for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz2[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }         
+                                            printf("\topcion: ");
+                                           caracter=scanf("%d",&menumult);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&menumult);
+                                                             }              
+                                           if(menumult==1){
+                                                multiplicacion(matriz1,H);
+                                                }
+                                           if(menumult==2){
+                                                multiplicacion(matriz2,H);
+                                                }
+                                           else{
+                                                printf("ERROR, el valor no corresponde");
+                                                k--;
+                                                }
+                                     }
+                                     
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             } 
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           break;
+                                              }
+                                      case 2:{
+                                           restamatriz(matriz1,matriz2,H);
+                                           
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           
+                                           break;
+                                              }
+                                      case 3:{
+                                           sumamatriz(matriz1,matriz2,H);
+                                           
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           
+                                           break;
+                                              }
+                                      case 4:{
+                              for(k=0;k<1;k++){             
+                                           printf("Cual de las matrices desea usar :\n\n");
+                                           
+                                           printf("1. \tPRIMERA MATRIZ\n\n");
+                                               for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz1[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }
+                                           printf("\n2. \tSEGUNDA MATRIZ\n\n");
+                                            for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz2[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }         
+                                            printf("\topcion: ");
+                                            caracter=scanf("%d",&menudiv);  
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&menudiv);
+                                                             }
+                                            switch(menudiv){            
+                                           case 1:{
+                                                divmatriz(matriz1,H);
+                                                break;
+                                                }
+                                           case 2:{
+                                                divmatriz(matriz2,H);
+                                                break;
+                                                }
+                                           default:{
+                                                printf("ERROR, el valor no corresponde");
+                                                k--;
+                                                break;
+                                                    }
+                                                           }
+                                                }
+                                                
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           break;
+                                              }
+                                      case 5:{
+                              for(k=0;k<1;k++){             
+                                           printf("Cual de las matrices desea usar :\n\n");
+                                           
+                                           printf("1. \tPRIMERA MATRIZ\n\n");
+                                               for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz1[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }
+                                           printf("\n2. \tSEGUNDA MATRIZ\n\n");
+                                            for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz2[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }         
+                                            printf("\topcion: ");
+                                            caracter=scanf("%d",&menudiv);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&menudiv);
+                                                             }
+                                            switch(menudiv){            
+                                           case 1:{
+                                                minversa(matriz1,H);
+                                                break;
+                                                }
+                                           case 2:{
+                                                minversa(matriz2,H);
+                                                break;
+                                                }
+                                           default:{
+                                                printf("ERROR, el valor no corresponde");
+                                                k--;
+                                                break;
+                                                    }
+                                                           }
+                                                }
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           break;
+                                              }
+                                      case 6:{
+                              for(k=0;k<1;k++){             
+                                           printf("Cual de las matrices desea usar :\n\n");
+                                           
+                                           printf("1. \tPRIMERA MATRIZ\n\n");
+                                               for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz1[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }
+                                           printf("\n2. \tSEGUNDA MATRIZ\n\n");
+                                            for(i=0;i<H;i++){
+                                                 for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",matriz2[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }         
+                                            printf("\topcion: ");
+                                            caracter=scanf("%d",&menudiv); 
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&menudiv);
+                                                             }
+                                            switch(menudiv){            
+                                           case 1:{
+                                                diagonal(matriz1,H);
+                                                break;
+                                                }
+                                           case 2:{
+                                                diagonal(matriz2,H);
+                                                break;
+                                                }
+                                           default:{
+                                                printf("ERROR, el valor no corresponde");
+                                                k--;
+                                                break;
+                                                    }
+                                                           }
+                                                }
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           break;
+                                              }
+                                      case 7:{
+                                           multimatris(matriz1,matriz2,H);
+                                           
+                                           printf("\n\n Desea volver al menu principal\n");
+                                           printf("1. \tSi\n");
+                                           printf("2. \tNo ( Termina el programa )\n");
+                                           for(k=0;k<1;k++){
+                                           printf("valor: ");
+                                           caracter=scanf("%d",&volmenuprin);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&volmenuprin);
+                                                             }
+                                           switch(volmenuprin){
+                                                    case 1:{
+                                                            goto menuprin;
+                                                            }
+                                                    case 2:{
+                                                            break;
+                                                            }
+                                                    default:{
+                                                              printf("ERROR, el valor no corresponde");
+                                                              k--;
+                                                             }
+                                                             }
+                                                    }
+                                           
+                                           break;
+                                              }        
+                                      case 8:{
+                                             printf("\t\t\tMENU DE OPCIONES\n");
+                                             guarda2();
+                                             for(j=0;j<1;j++){
+                                             submenuop:
+                                             printf("1. Limpiar pantalla y volver al menu principal ( no cambia el contenido de ninguna matriz )\n");
+                                             printf("2. Cambiar color\n");
+                                             printf("3. Cambiar el contenido de alguna de las matrices\n");
+                                             printf("4. Volver al menu principal\n");
+                                             printf("opcion: \n");
+                                             caracter=scanf("%d",&submenu);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&submenu);
+                                                             }
+                                             guarda1();
+                                             if(submenu==1){
+                                                            system("cls");
+                                                            goto menuprin;
+                                                            }
+                                             if(submenu==2){
+                                             for(k=0;k<1;k++){
+                                                printf("1. Azul\n");
+                                                printf("2. Verde\n");
+                                                printf("3. Rojo\n");
+                                                printf("4. Blanco\n");
+                                             printf("opcion: ");
+                                                caracter=scanf("%d",&menucolor);
+                                            while(!caracter){
+                                            printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                            fflush(stdin);//esto borra el buffer
+                                             caracter=scanf("%d",&menucolor);
+                                                             }
+                                             if(menucolor==1){
+                                                              system("color 09");
+                                                              guarda1();
+                                                              goto submenuop;
+                                                              }
+                                            if(menucolor==2){
+                                                             system("color 0A");
+                                                             guarda1();
+                                                              goto submenuop;
+                                                             } 
+                                            if(menucolor==3){
+                                                             system("color 0c");
+                                                             guarda1();
+                                                              goto submenuop;
+                                                             }
+                                            if(menucolor==4){
+                                                             system("color 0f");
+                                                             guarda1();
+                                                              goto submenuop;
+                                                             }
+                                            else  {
+                                                   printf("ERROR ,El valor no corresponde\n");
+                                                   k--;
+                                                   }
+                                                             }
+                                                           }
+                                              for(l=0;l<1;l++){
+                                              if(submenu==3){
+                                                             printf("1. Cambiar el contenido de la PRIMERA MATRIZ\n");
+                                                             printf("2. Cambiar el contenido de la SEGUNDA MATRIZ\n");
+                                                             printf("\t opcion: ");
+                                                             caracter=scanf("%d",&cambmatriz);
+                                                              while(!caracter){
+                                                              printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                                              fflush(stdin);//esto borra el buffer
+                                                              caracter=scanf("%d",&cambmatriz);
+                                                                               }
+                                                             if(cambmatriz==1){
+                                                                               printf("\t\t\tINGRESO DE LOS VALORES DE LA PRIMERA MATRIZ\n");
+                                                                               guarda1();
+                                                                                  for(i=0;i<H;i++){
+                                                                                    for(j=0;j<H;j++){
+                                                                                                           printf("Ingrese un valor para el contenido de la posicion [%d][%d]\n",i+1,j+1);
+                                                                                                           printf("\tvalor: ");
+                                                                                                           caracter=scanf("%f",&matriz1[i][j]);
+                                                                                                                   while(!caracter){
+                                                                                                                   printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                                                                                                   fflush(stdin);//esto borra el buffer
+                                                                                                                   caracter=scanf("%f",&matriz1[i][j]);
+                                                                                                                                    }
+                                                                                                     }
+                                                                                                   }       
+                                                                                                   goto submenuop;
+                                                                               }
+                                                             if(cambmatriz==2){
+                                                                             printf("\t\t\tINGRESO DE LOS VALORES DE LA SEGUNDA MATRIZ\n");
+                                                                                   guarda1();
+                                                                                       for(i=0;i<H;i++){
+                                                                                        for(j=0;j<H;j++){
+                                                                                                          printf("Ingrese un valor para el contenido de la posicion [%d][%d]\n",i+1,j+1);
+                                                                                                          printf("\tvalor: ");
+                                                                                                          caracter=scanf("%f",&matriz2[i][j]);
+                                                                                                                   while(!caracter){
+                                                                                                                   printf("\nLas LETRAS no valen.Introduce un numero: ");
+                                                                                                                   fflush(stdin);//esto borra el buffer
+                                                                                                                   caracter=scanf("%f",&matriz2[i][j]);
+                                                                                                                                    }
+                                                                                                         }
+                                                                                                        }
+                                                                                                         goto submenuop;
+                                                                             }
+                                                             else{
+                                                                   printf("ERROR ,El valor no corresponde\n");
+                                                                   l--;
+                                                                  }
+                                                               }//del for 
+                                                             }
+                                              if(submenu==4){
+                                                             goto menuprin;
+                                                             }
+                                                else{
+                                                     printf("ERROR, El valor no corresponde\n");
+                                                     j--;
+                                                     }
+                                                }
+                                             break;
+                                             }//del case principal
+                                      case 9:{
+                                            break;
+                                              }        
+                                      default:{
+                                               printf("ERROR,el valor ingresado no corresponde\n");
+                                               i--;
+                                               break;
+                                               }
+                                     }
+                         }
+
+        system("pause");
+        getche();
+        return 0;   
+}
+
+
+//FUNCIONES
+void guarda1(){
+               int i;
+               for(i=0;i<80;i++){
+                                 printf("-");
+                                 }
+                printf("\n");                 
+               }
+               
+void guarda2(){
+               int i;
+               for(i=0;i<80;i++){
+                                  printf("=");
+                                 }
+               printf("\n");
+               }
+               
+void titulo(){
+         printf("\t\t\tCALCULADORA DE MATRICES\n");
+             guarda2();
+              }
+              
+void multiplicacion(float matmult[H][H],int limite){
+     
+     float num,aux[H][H];
+     int i,j,caracter;
+           printf("ingrese el numero por el cual desea multiplicar la matriz\n\n");
+           caracter=scanf("%f",&num);
+            while(!caracter){
+            printf("\nLas LETRAS no valen.Introduce un numero: ");
+            fflush(stdin);//esto borra el buffer
+            caracter=scanf("%f",&num);
+                             }
+           for(i=0;i<limite;i++){
+             for(j=0;j<limite;j++){
+                               aux[i][j]=matmult[i][j]*num;
+                                   }
+                                 }
+                             
+           for(i=0;i<limite;i++){
+             for(j=0;j<limite;j++){
+                               printf("el resultado de la posicion [%d] [%d] es: [%2.2f] \n",i+1,j+1,aux[i][j]);
+                                   }
+                                 }
+     
+}
+
+void restamatriz(float mat1[H][H],float mat2[H][H],int limite){
+     
+
+     float aux[H][H];
+     int i,j;
+
+
+    for (i=0;i<limite;i++){
+        for (j=0;j<limite;j++){
+                          aux[i][j]=mat1[i][j]-mat2[i][j];
+                          }   
+                     }
+
+     printf("\tLa matriz que dio como resultado es :\n\n");
+                                                 for(i=0;i<H;i++){
+                                                   for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",aux[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }  
+}
+
+void sumamatriz(float mat1[H][H],float mat2[H][H],int limite){
+     
+
+     float aux[H][H];
+     int i,j;
+
+
+    for (i=0;i<limite;i++){
+        for (j=0;j<limite;j++){
+                          aux[i][j]=mat1[i][j]+mat2[i][j];
+                          }   
+                     }
+
+     printf("\tLa matriz que dio como resultado es :\n\n");
+                                                 for(i=0;i<H;i++){
+                                                   for(j=0;j<H;j++){
+                                                                   printf("[%2.2f] ",aux[i][j]);
+                                                                   }
+                                                  printf("\n");
+                                                                }  
+}
+
+void divmatriz(float mat1[H][H],int limite){
+       int i,j,num,caracter;
+       float aux[H][H];
+                
+                printf("ingrese el numero por el cual desea dividir la matriz\n\n");
+                printf("\tvalor: ");
+                scanf("%d",&num);
+                 while(!caracter){
+                 printf("\nLas LETRAS no valen.Introduce un numero: ");
+                 fflush(stdin);//esto borra el buffer
+                 caracter=scanf("%d",&num);
+                                  }
+                  for(i=0;i<limite;i++){
+	                for(j=0;j<limite;j++){
+                                      aux[i][j]=mat1[i][j]/num;
+                                      }
+                                    }
+                                    
+                printf("La matriz que dio como resultado es :\n\n");
+                  for(i=0;i<H;i++){
+                    for(j=0;j<H;j++){
+                                       printf("[%2.2f] ",aux[i][j]);
+                                     }
+                                     printf("\n");
+                                   } 
+}
+
+void minversa(float mat[H][H] ,int limite){
+    
+    float matcf[H][H],mattp[H][H],mati[H][H],det;
+    int i,j;
+
+
+//Calculo y muestra el Determinante
+          det=(mat[0][0]*mat[1][1]*mat[2][2]+mat[1][0]*mat[2][1]*mat[0][2]+mat[0][1]*mat[1][2]*mat[2][0])-(mat[0][2]*mat[1][1]*mat[2][0]+mat[2][1]*mat[1][2]*mat[0][0]+mat[1][0]*mat[0][1]*mat[2][2]);
+          printf("\nEl determinante es: %.0f \n",det);
+
+          if(det!=0){
+                     printf("\nLa matriz tiene inversa.\n");
+//Calculo la matriz cofactor
+          matcf[0][0]= 1*((mat[1][1]*mat[2][2])-(mat[1][2]*mat[2][1]));
+          matcf[0][1]=-1*((mat[1][0]*mat[2][2])-(mat[1][2]*mat[2][0]));
+          matcf[0][2]= 1*((mat[1][0]*mat[2][1])-(mat[1][1]*mat[2][0]));
+          matcf[1][0]=-1*((mat[0][1]*mat[2][2])-(mat[0][2]*mat[2][1]));
+          matcf[1][1]= 1*((mat[0][0]*mat[2][2])-(mat[0][2]*mat[2][0]));
+          matcf[1][2]=-1*((mat[0][0]*mat[2][1])-(mat[0][1]*mat[2][0]));
+          matcf[2][0]= 1*((mat[0][1]*mat[1][2])-(mat[0][2]*mat[1][1]));
+          matcf[2][1]=-1*((mat[0][0]*mat[1][2])-(mat[0][2]*mat[1][0]));
+          matcf[2][2]= 1*((mat[0][0]*mat[1][1])-(mat[0][1]*mat[1][0]));
+                       printf("Matriz Cofactor:\n");
+                       for(i=0;i<limite;i++){
+                         for(j=0;j<limite;j++){
+                                          printf("[%.0f] ",matcf[i][j]);
+                                          }
+                         printf("\n");
+                                       }
+                       for(i=0;i<limite;i++){
+                         for(j=0;j<limite;j++){
+                                           mattp[i][j]=matcf[j][i];
+                                          }
+                                       }
+
+//Calculo la matriz inversa
+                    printf("\nLa matriz inversa es: \n");
+                    for(i=0;i<limite;i++){
+                      for(j=0;j<limite;j++){
+                        mati[i][j]=mattp[i][j]/det;
+                                       }
+
+                                     }
+                    for(i=0;i<limite;i++){
+                      for(j=0;j<limite;j++){
+                        printf("[%.3f] ",mati[i][j]);
+                                       }
+                      printf("\n");
+                                     }
+                   }
+    else{
+        printf("La matriz no tiene inversa\n");
+        }     
+}
+
+void diagonal(float mat[H][H], int limite){
+     
+     int i,j;
+     float diag=0;
+     
+     
+     for(i=0;i<limite;i++){
+       for(j=0;j<limite;j++){
+                             if(i==j){   
+                                        diag=diag+mat[i][j];
+                                      }
+                             }
+                           }
+       printf("La suma de los valores de la diagonal fue : %2.2f\n",diag);
+}
+
+void multimatris(float mat[H][H],float mat2[H][H],int limite){
+    int i,j,k;
+    float mat3[H][H];
+    
+    for(i=0;i<limite;i++){
+      for(j=0;j<limite;j++){
+            mat3[i][j]=0;
+            }
+          }
+
+    for(i=0;i<limite;i++){
+                     for(j=0;j<limite;j++){
+                                       mat3[i][j]=mat3[i][j]+(mat[i][j]*mat2[i][j]);
+                                       }
+                     }
+    printf("el resultado de la multiplicacion de matrices es:\n");
+                                                                                  
+     for(i=0;i<H;i++){
+        for(j=0;j<H;j++){
+                         printf("[%2.2f] ",mat3[i][j]);
+                         }
+        printf("\n");
+                     }       
+     }
